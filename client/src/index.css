@@ -106,3 +106,14 @@ body {
   color: white;
   cursor: pointer;
 }
+
+.form-cont {
+  display: flex;
+  align-items: center;
+  margin-left: 1200px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}

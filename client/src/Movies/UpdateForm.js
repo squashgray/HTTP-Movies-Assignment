@@ -15,8 +15,8 @@ export default class UpdateForm extends Component {
 
   render() {
     return (
-      <div>
-        <form>
+      <div className="form-cont">
+        <form className="form">
           <input
             type="text"
             name="title"

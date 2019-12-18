@@ -25,7 +25,7 @@ const App = () => {
       <Route
         path="/update-movie/:id"
         render={props => {
-          return <UpdateForm {...props} />; // only renders this component when conditions are met //
+          return <UpdateForm {...props} />;
         }}
       />
     </>

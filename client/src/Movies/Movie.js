@@ -33,7 +33,18 @@ export default class Movie extends React.Component {
 
   routeToEdit = e => {
     e.preventDefault();
-    // this.props.history.push(`/update_item/${movie.id}`);
+    this.props.history.push(`/update_movie/${this.state.movie.id} `);
+  };
+
+  deleteMovie = e => {
+    e.preventDefault();
+    axios
+      .delete(`http://localhost:5000/api/movies/${this.state.movie.id}`)
+      .then(res => {
+        this.setState({ movie: res.data });
+        this.props.history.push("/");
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -50,7 +61,7 @@ export default class Movie extends React.Component {
         <div className="edit-button" onClick={this.routeToEdit}>
           Edit
         </div>
-        <div className="delete-button" onClick={this.routeToEdit}>
+        <div className="delete-button" onClick={this.deleteMovie}>
           Delete
         </div>
       </div>
