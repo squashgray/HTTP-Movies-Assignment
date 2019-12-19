@@ -1,49 +1,60 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
-export default class UpdateForm extends Component {
-  state = {
+function UpdateForm(props) {
+  const initialState = {
+    id: props.match.params.id,
     title: "",
     director: "",
     metascore: "",
-    stars: []
+    stars: ["John Wayne", "Fart Turd"]
   };
 
-  changeHandler = e => {
+  const [state, setState] = useState(initialState);
+
+  const changeHandler = e => {
     e.persist(); // makes the text persistent by putting it into persistent storage //
-    this.setState({ [e.target.name]: e.target.value });
+    setState({ ...state, [e.target.name]: e.target.value });
+    console.log(state);
   };
 
-  render() {
-    return (
-      <div className="form-cont">
-        <form className="form">
-          <input
-            type="text"
-            name="title"
-            value={this.state.title}
-            onChange={this.changeHandler}
-          ></input>
-          <input
-            type="text"
-            name="director"
-            value={this.state.director}
-            onChange={this.changeHandler}
-          ></input>
-          <input
-            type="text"
-            name="metascore"
-            value={this.state.metascore}
-            onChange={this.changeHandler}
-          ></input>
-          <input
-            type="text"
-            name="stars"
-            value={this.state.stars}
-            onChange={this.changeHandler}
-          ></input>
-          <button type="submit">Submit Edit</button>
-        </form>
-      </div>
-    );
-  }
+  const onSubmit = e => {
+    e.preventDefault();
+    axios
+      .put(`http://localhost:5000/api/movies/${props.match.params.id}`, state)
+      .then(res => props.history.push("/"))
+      .catch(err => console.log(err));
+  };
+
+  return (
+    <div className="form-cont">
+      <form className="form" onSubmit={onSubmit}>
+        <label>Title</label>
+        <input
+          type="text"
+          name="title"
+          value={state.title}
+          onChange={changeHandler}
+        ></input>
+        <label>Director</label>
+        <input
+          type="text"
+          name="director"
+          value={state.director}
+          onChange={changeHandler}
+        ></input>
+        <label>Metascore</label>
+        <input
+          type="text"
+          name="metascore"
+          value={state.metascore}
+          onChange={changeHandler}
+        ></input>
+        <br />
+        <button type="submit">Submit Edit</button>
+      </form>
+    </div>
+  );
 }
+
+export default UpdateForm;

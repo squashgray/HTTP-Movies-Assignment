@@ -4,6 +4,7 @@ import MovieCard from "./MovieCard";
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = {
       movie: null
     };
@@ -31,17 +32,17 @@ export default class Movie extends React.Component {
     addToSavedList(this.state.movie);
   };
 
-  routeToEdit = e => {
-    e.preventDefault();
-    this.props.history.push(`/update_movie/${this.state.movie.id} `);
+  routeToEdit = () => {
+    this.props.history.push(`/update-movie/${this.state.movie.id} `);
   };
 
   deleteMovie = e => {
     e.preventDefault();
+    console.log(this.props);
     axios
       .delete(`http://localhost:5000/api/movies/${this.state.movie.id}`)
       .then(res => {
-        this.setState({ movie: res.data });
+        console.log(res.data);
         this.props.history.push("/");
       })
       .catch(err => console.log(err));
